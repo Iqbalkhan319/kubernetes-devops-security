@@ -39,3 +39,9 @@ sudo iptables -t nat -A POSTROUTING -s 172.16.188.0/24 -j MASQUERADE
 curl https://thoughtworks.github.io/talisman/install.sh > ~/install-talisman.sh
 chmod +x ~/install-talisman.sh
 ~/install-talisman.sh
+#or:
+
+curl https://thoughtworks.github.io/talisman/install.sh > /tmp/install-talisman.sh
+chmod +x /tmp/install-talisman.sh
+cd /root/kubernetes-devops-security
+bash /tmp/install-talisman.sh pre-commit
