@@ -1,3 +1,4 @@
 fileignoreconfig:
 - filename: sec_files/password.txt
-  checksum: 61d3ac0b212f5fd60497ac5448639c25f46adffdd9d2b8f49433a10323d3f196
+  checksum: f5f59b4c72a1855f3aeae06b74b7dff98285ee99d02e24590a25fc2ee3c675b8
+version: "1.0"
