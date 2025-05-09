@@ -1,0 +1,2 @@
+apikey=AizaSyCqhjgrPtr_La56sdUkjfav_laCqhjgrPtr_2s 
+api-url=www.api.example.com
