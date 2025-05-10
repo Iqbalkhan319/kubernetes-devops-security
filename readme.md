@@ -45,3 +45,7 @@ curl https://thoughtworks.github.io/talisman/install.sh > /tmp/install-talisman.
 chmod +x /tmp/install-talisman.sh
 cd /root/kubernetes-devops-security
 bash /tmp/install-talisman.sh pre-commit
+
+#PIT Mutation:
+#Ref URL:
+https://pitest.org/quickstart/mutators/
