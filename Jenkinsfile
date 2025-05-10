@@ -32,7 +32,7 @@ pipeline {
       stage('SonarQube - SAST') {
         steps {
           withSonarQubeEnv('sonarqube-server') {
-            sh "mvn clean verify sonar:sonar -Dsonar.projectKey=numericapp -Dsonar.projectName='numericapp' -Dsonar.host.url=http://172.16.188.160:9000 -Dsonar.token=sqp_e45ae390d8ef716417a27702a80d2369972f5ca0"
+            sh "mvn clean verify sonar:sonar -Dsonar.projectKey=numericapp -Dsonar.projectName='numericapp' -Dsonar.host.url=http://172.16.188.160:9000"
           }
           timeout(time: 2, unit: 'MINUTES') {
             script {
