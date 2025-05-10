@@ -55,7 +55,7 @@ https://pitest.org/quickstart/mutators/
 
 docker run -d --name postgres \
   -e POSTGRES_USER=sonar \
-  -e POSTGRES_PASSWORD=sonar \
+  -e POSTGRES_PASSWORD= \
   -e POSTGRES_DB=sonarqube \
   -p 5432:5432 \
   postgres
@@ -64,7 +64,7 @@ docker run -d --name sonarqube \
   -p 9000:9000 \
   -e SONAR_JDBC_URL=jdbc:postgresql://postgres:5432/sonarqube \
   -e SONAR_JDBC_USERNAME=sonar \
-  -e SONAR_JDBC_PASSWORD=sonar \
+  -e SONAR_JDBC_PASSWORD= \
   --link postgres \
   sonarqube
 
