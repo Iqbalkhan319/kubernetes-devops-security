@@ -43,7 +43,14 @@ pipeline {
       }
       stage('Vulnerability Scan--Docker-') {
           steps {
-              sh "mvn org.owasp:dependency-check-maven:check"
+            parallel(
+              "Dependency Scan"{
+                sh "mvn org.owasp:dependency-check-maven:check"
+              },
+              "Trivy Scan":{
+                sh "bash trivy-docker-image.sh"
+              }
+            )
           }
           post {
               always {

@@ -68,3 +68,11 @@ docker run -d --name sonarqube \
   --link postgres \
   sonarqube
 
+# Install trivy
+
+docker run --rm -v $HOME:/root/.cache/ aquasec/trivy:0.18.3 --severity CRITICAL python:3.4-alpine
+
+docker run --rm -v $HOME:/root/.cache/ aquasec/trivy:0.18.3 --severity CRITICAL --exit-code 1 python:3.4-alpine
+
+docker run --rm -v $HOME:/root/.cache/ aquasec/trivy:0.18.3 --severity LOW --exit-code  python:3.4-alpine
+
