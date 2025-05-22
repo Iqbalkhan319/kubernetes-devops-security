@@ -74,5 +74,30 @@ docker run --rm -v $HOME:/root/.cache/ aquasec/trivy:0.18.3 --severity CRITICAL 
 
 docker run --rm -v $HOME:/root/.cache/ aquasec/trivy:0.18.3 --severity CRITICAL --exit-code 1 python:3.4-alpine
 
-docker run --rm -v $HOME:/root/.cache/ aquasec/trivy:0.18.3 --severity LOW --exit-code  python:3.4-alpine
+docker run --rm -v $HOME:/root/.cache/ aquasec/trivy:0.18.3 --severity LOW --exit-code 0 python:3.4-alpine
 
+#Install trivy in control plane
+
+#Add the trivy-repo
+sudo apt-get update
+sudo apt-get -y install wget apt-transport-https gnupg lsb-release
+wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+
+#Update Repo and Install trivy
+sudo apt-get update
+sudo apt-get install trivy -y
+
+https://aquasecurity.github.io/trivy/v0.52/docs/target/container_image/
+
+
+
+#Scanning script:
+===============
+#!/bin/bash
+
+dockerImageName=$(awk 'NR==1 {print $2}' Dockerfile)
+echo $dockerImageName
+
+docker run --rm -v /tmp/.cache:/root/.cache/ aquasec/trivy:0.17.2 -q image --exit-code 0 --severity HIGH --light $dockerImageName
+docker run --rm -v /tmp/.cache:/root/.cache/ aquasec/trivy:0.17.2 -q image --exit-code 0 --severity CRITICAL --light $dockerImageName
