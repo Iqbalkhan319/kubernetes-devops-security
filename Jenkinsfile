@@ -5,7 +5,7 @@ pipeline {
     stage('Build Artifact') {
       steps {
         sh "mvn clean package -DskipTests=true"
-        archive 'target/*.jar' //so that they can be downloaded later
+        archiveArtifacts 'target/*.jar' // archive for later download
       }
     } 
 
@@ -43,6 +43,8 @@ pipeline {
         }
         stage('Trivy Scan') {
           steps {
+            // Ensure trivy directory exists to avoid stat error
+            sh 'mkdir -p trivy'
             sh 'bash trivy-docker-image.sh'
           }
         }
@@ -53,7 +55,7 @@ pipeline {
       steps {
         withDockerRegistry([credentialsId: "docker-hub", url: ""]){
           sh 'printenv'
-          sh 'sudo docker build -t iqbalkhan319/numeric-app:$GIT_COMMIT .'
+          sh 'docker build -t iqbalkhan319/numeric-app:$GIT_COMMIT .'
           sh 'docker push iqbalkhan319/numeric-app:$GIT_COMMIT'
         }
       }
@@ -73,8 +75,12 @@ pipeline {
     always {
       junit 'target/surefire-reports/*.xml'
       jacoco execPattern: 'target/jacoco.exec'
-      pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
+      pitmutation mutationStatsFile: 'target/pit-reports/mutations.xml' // simplified path
       dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
+
+      // Archive reports for easier debugging and download
+      archiveArtifacts artifacts: 'target/pit-reports/**', allowEmptyArchive: true
+      archiveArtifacts artifacts: 'target/dependency-check-report.xml', allowEmptyArchive: true
     }
   }
 }
